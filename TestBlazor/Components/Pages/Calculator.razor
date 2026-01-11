@@ -1,0 +1,35 @@
+﻿@page "/calculator"
+@rendermode InteractiveServer
+@using System.Data
+
+<div class="calculator card p-3" style="max-width: 300px;">
+    <input class="form-control mb-2 text-end" @bind="display" readonly />
+    <div class="row g-1">
+        @foreach (var btn in buttons)
+        {
+            <div class="col-3">
+                <button class="btn btn-outline-primary w-100" @onclick="() => OnClick(btn)">@btn</button>
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    private string display = "";
+    private string[] buttons = { "7", "8", "9", "/", "4", "5", "6", "*", "1", "2", "3", "-", "C", "0", "=", "+", "sin", "cos", "tan", "sqrt" };
+
+    private void OnClick(string btn)
+    {
+        try
+        {
+            if (btn == "=") display = new DataTable().Compute(display.Replace(",", "."), null).ToString();
+            else if (btn == "C") display = "";
+            else if (btn == "sin") display = Math.Sin(double.Parse(display)).ToString();
+            else if (btn == "cos") display = Math.Cos(double.Parse(display)).ToString();
+            else if (btn == "tan") display = Math.Tan(double.Parse(display)).ToString();
+            else if (btn == "sqrt") display = Math.Sqrt(double.Parse(display)).ToString();
+            else display += btn;
+        }
+        catch { display = "Error"; }
+    }
+}
