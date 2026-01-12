@@ -32,9 +32,10 @@ pipeline {
            }
            stage('Deploy to VDS') {
                   steps {
-                      withCredentials([sshUserPrivateKey(credentialsId: 'vds-ssh-key',
+                      withCredentials([sshUserPrivateKey(credentialsId: 'c388a29f-ab16-44a6-ae08-fc2e14ed1f50',
                                                          keyFileVariable: 'SSH_KEY',
-                                                         usernameVariable: 'SSH_USER')]) {
+                                                         passphraseVariable: 'dog'
+                                                         usernameVariable: 'root')]) {
                           bat """
                               scp -i %SSH_KEY% -r ./publish/* %SSH_USER%@38.244.216.252:/tmp/blazorapp/
                               ssh -i %SSH_KEY% %SSH_USER%@38.244.216.252 ^
