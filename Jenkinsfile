@@ -27,7 +27,7 @@ pipeline {
            }
            stage('Publish') {
                steps {
-                   bat 'dotnet publish --configuration Release --output ./publish --no-build'
+                     bat 'dotnet publish TestBlazor/TestBlazor.csproj --configuration Release --output ./publish --no-build'
                }
            }
            stage('Deploy to VDS') {
