@@ -37,8 +37,8 @@ pipeline {
                                                          passphraseVariable: 'dog',
                                                          usernameVariable: 'root')]) {
                           bat """
-                              scp -i %SSH_KEY% -r ./publish/* %SSH_USER%@38.244.216.252:/tmp/blazorapp/
-                              ssh -i %SSH_KEY% %SSH_USER%@38.244.216.252 ^
+                              scp -i %SSH_KEY% -r ./publish/* %root%@38.244.216.252:/tmp/blazorapp/
+                              ssh -i %SSH_KEY% %root%@38.244.216.252 ^
                                   "sudo systemctl stop blazorapp || true && ^
                                    sudo rm -rf /var/www/testblazor/* && ^
                                    sudo mv /tmp/blazorapp/* /var/www/testblazor/ && ^
