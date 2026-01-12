@@ -17,23 +17,23 @@ pipeline {
            }
            stage('Restore') {
                steps {
-                   sh 'dotnet restore'
+                   bat 'dotnet restore'
                }
            }
            stage('Build') {
                steps {
-                   sh 'dotnet build --configuration Release --no-restore'
+                   bat 'dotnet build --configuration Release --no-restore'
                }
            }
            stage('Publish') {
                steps {
-                   sh 'dotnet publish --configuration Release --output ./publish --no-build'
+                   bat 'dotnet publish --configuration Release --output ./publish --no-build'
                }
            }
            stage('Deploy to VDS') {
                steps {
                    sshagent(['c388a29f-ab16-44a6-ae08-fc2e14ed1f50']) {
-                       sh '''
+                       bat '''
                            scp -r ./publish/* root@38.244.216.252:/tmp/blazorapp/
                            ssh root@38.244.216.252 "
                                sudo systemctl stop blazorapp || true
