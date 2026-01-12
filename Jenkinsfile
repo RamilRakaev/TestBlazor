@@ -31,24 +31,24 @@ pipeline {
                }
            }
            stage('Deploy to VDS') {
-                  agent { label 'linux' }
-               steps {
-                   sshagent(['c388a29f-ab16-44a6-ae08-fc2e14ed1f50']) {
-                       sh '''
-                           scp -r ./publish/* root@38.244.216.252:/tmp/blazorapp/
-                           ssh root@38.244.216.252 "
-                               sudo systemctl stop blazorapp || true
-                               sudo rm -rf /var/www/testblazor/*
-                               sudo mv /tmp/blazorapp/* /var/www/testblazor/
-                               sudo chown -R www-data:www-data /var/www/testblazor
-                               sudo chmod -R 755 /var/www/testblazor
-                               sudo systemctl start blazorapp
-                               sudo systemctl status blazorapp --no-pager
-                           "
-                       '''
-                   }
-               }
-           }
+                  steps {
+                      withCredentials([sshUserPrivateKey(credentialsId: 'vds-ssh-key',
+                                                         keyFileVariable: 'SSH_KEY',
+                                                         usernameVariable: 'SSH_USER')]) {
+                          bat """
+                              scp -i %SSH_KEY% -r ./publish/* %SSH_USER%@38.244.216.252:/tmp/blazorapp/
+                              ssh -i %SSH_KEY% %SSH_USER%@38.244.216.252 ^
+                                  "sudo systemctl stop blazorapp || true && ^
+                                   sudo rm -rf /var/www/testblazor/* && ^
+                                   sudo mv /tmp/blazorapp/* /var/www/testblazor/ && ^
+                                   sudo chown -R www-data:www-data /var/www/testblazor && ^
+                                   sudo chmod -R 755 /var/www/testblazor && ^
+                                   sudo systemctl start blazorapp && ^
+                                   sudo systemctl status blazorapp --no-pager"
+                          """
+                      }
+                  }
+              }
        }
        post {
            always {
