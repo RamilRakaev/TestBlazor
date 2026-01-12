@@ -33,7 +33,7 @@ pipeline {
            stage('Deploy to VDS') {
                steps {
                    sshagent(['c388a29f-ab16-44a6-ae08-fc2e14ed1f50']) {
-                       bat '''
+                       sh '''
                            scp -r ./publish/* root@38.244.216.252:/tmp/blazorapp/
                            ssh root@38.244.216.252 "
                                sudo systemctl stop blazorapp || true
