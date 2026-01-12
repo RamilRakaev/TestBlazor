@@ -31,6 +31,7 @@ pipeline {
                }
            }
            stage('Deploy to VDS') {
+                  agent { label 'linux' }
                steps {
                    sshagent(['c388a29f-ab16-44a6-ae08-fc2e14ed1f50']) {
                        sh '''
