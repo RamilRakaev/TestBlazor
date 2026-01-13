@@ -41,7 +41,7 @@ pipeline {
                               dir %SSH_KEY%
                               
                               icacls "%SSH_KEY%" /inheritance:r
-                              icacls "%SSH_KEY%" /grant:r "scientist:R"
+                              icacls "%SSH_KEY%" /grant:r "WIN-7BI27BQP2RB\Ramil:R"
                               
                               scp -o StrictHostKeyChecking=no -i %SSH_KEY% -r ./publish/* %root%@38.244.216.252:/tmp/blazorapp/
                               ssh -o StrictHostKeyChecking=no -i %SSH_KEY% %root%@38.244.216.252 ^
