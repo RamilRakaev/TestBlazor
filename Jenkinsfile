@@ -41,9 +41,9 @@ pipeline {
                               dir %SSH_KEY%
                               
                               icacls "%SSH_KEY%" /inheritance:r
-                              icacls "%SSH_KEY%" /grant:r "%USERNAME%:R"
+                              icacls "%SSH_KEY%" /grant:r "Ramil:R"
                               
-                              scp --o StrictHostKeyChecking=no i %SSH_KEY% -r ./publish/* %root%@38.244.216.252:/tmp/blazorapp/
+                              scp --o StrictHostKeyChecking=no -i %SSH_KEY% -r ./publish/* %root%@38.244.216.252:/tmp/blazorapp/
                               ssh -o StrictHostKeyChecking=no -i %SSH_KEY% %root%@38.244.216.252 ^
                                   "sudo systemctl stop blazorapp || true && ^
                                    sudo rm -rf /var/www/testblazor/* && ^
