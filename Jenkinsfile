@@ -36,24 +36,26 @@ pipeline {
                                                          keyFileVariable: 'SSH_KEY',
                                                          passphraseVariable: 'dog',
                                                          usernameVariable: 'root')]) {
-                          bat """
-                              echo SSH_KEY path: %SSH_KEY%
-                              dir %SSH_KEY%
-                              whoami
-                              icacls "%SSH_KEY%" /inheritance:r
-                              icacls "%SSH_KEY%" /grant:r "Ramil:R"
-                              icacls "%SSH_KEY%" /inheritance:r /grant:r "Everyone:R"
-                              
-                              scp -o StrictHostKeyChecking=no -i %SSH_KEY% -r ./publish/* %root%@38.244.216.252:/tmp/blazorapp/
-                              ssh -o StrictHostKeyChecking=no -i %SSH_KEY% %root%@38.244.216.252 ^
-                                  "sudo systemctl stop blazorapp || true && ^
-                                   sudo rm -rf /var/www/testblazor/* && ^
-                                   sudo mv /tmp/blazorapp/* /var/www/testblazor/ && ^
-                                   sudo chown -R www-data:www-data /var/www/testblazor && ^
-                                   sudo chmod -R 755 /var/www/testblazor && ^
-                                   sudo systemctl start blazorapp && ^
-                                   sudo systemctl status blazorapp --no-pager"
-                          """
+                          
+                             bat """
+                                     echo SSH_KEY path: %SSH_KEY%
+                                     whoami
+                                     icacls "%SSH_KEY%" /inheritance:r /grant:r "Everyone:R"
+                                     
+                                     scp -o StrictHostKeyChecking=no -i "%SSH_KEY%" -r ./publish/* %SSH_USER%@38.244.216.252:/tmp/blazorapp/
+                                 """
+
+                             bat """
+                                     ssh -o StrictHostKeyChecking=no -i "%SSH_KEY%" %SSH_USER%@38.244.216.252 
+                                            "sudo systemctl stop blazorapp || true && 
+                                            sudo rm -rf /var/www/testblazor/* && 
+                                            sudo mv /tmp/blazorapp/* /var/www/testblazor/ && 
+                                            sudo chown -R www-data:www-data /var/www/testblazor && 
+                                            sudo chmod -R 755 /var/www/testblazor && 
+                                            sudo systemctl start blazorapp && 
+                                            sudo systemctl status blazorapp --no-pager"
+                                 """
+                             
                       }
                   }
               }
