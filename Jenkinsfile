@@ -41,7 +41,7 @@ pipeline {
                                     bat """
                                             echo SSH_KEY path: %SSH_KEY%
                                             whoami
-                                            icacls "%SSH_KEY%" /inheritance:r /grant:r "Everyone:R"
+                                            icacls "%SSH_KEY%" /inheritance:r /grant:r "Everyone:F"
                                             
                                             scp -o StrictHostKeyChecking=no -i "%SSH_KEY%" -r ./publish/* %SSH_USER%@38.244.216.252:/tmp/blazorapp/
                                         """
