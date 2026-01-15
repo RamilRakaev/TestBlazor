@@ -43,7 +43,7 @@ pipeline {
                                             whoami
                                             icacls "%SSH_KEY%" /inheritance:r /grant:r "Everyone:F"
                                             
-                                            scp -o StrictHostKeyChecking=no -i "%SSH_KEY%" -r ./publish/* %SSH_USER%@38.244.216.252:/tmp/blazorapp/
+                                            scp -v -o StrictHostKeyChecking=no -o ConnectTimeout=30 -i "%SSH_KEY%" -r ./publish/* root@38.244.216.252:/tmp/blazorapp/
                                         """
        
                                     bat """
