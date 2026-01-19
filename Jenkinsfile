@@ -42,7 +42,7 @@ pipeline {
                                             echo SSH_KEY path: %SSH_KEY%
                                             whoami
                                             icacls "%SSH_KEY%"
-                                            icacls "%SSH_KEY%" /inheritance:r /grant:r "%USERNAME%:F"
+                                            icacls "%SSH_KEY%" /inheritance:r /grant:r "SYSTEM:F"
                                             
                                             scp -v -o StrictHostKeyChecking=no -o ConnectTimeout=30 -i "%SSH_KEY%" -r ./publish/* root@38.244.216.252:/tmp/blazorapp/
                                         """
