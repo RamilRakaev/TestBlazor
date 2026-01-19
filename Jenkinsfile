@@ -48,16 +48,15 @@ pipeline {
                                         """
        
                                     bat """
-                                            ssh -o StrictHostKeyChecking=no -i "%SSH_KEY%" root@38.244.216.252 
-                                                   "sudo systemctl stop blazorapp || true && 
-                                                   sudo rm -rf /var/www/testblazor/* && 
-                                                   sudo mv /tmp/blazorapp/* /var/www/testblazor/ && 
-                                                   sudo chown -R www-data:www-data /var/www/testblazor && 
-                                                   sudo chmod -R 755 /var/www/testblazor && 
-                                                   sudo systemctl start blazorapp && 
+                                              ssh -o StrictHostKeyChecking=no -i "%SSH_KEY%" root@38.244.216.252 ^
+                                                  "sudo systemctl stop blazorapp || true && \
+                                                   sudo rm -rf /var/www/testblazor/* && \
+                                                   sudo mv /tmp/blazorapp/* /var/www/testblazor/ && \
+                                                   sudo chown -R www-data:www-data /var/www/testblazor && \
+                                                   sudo chmod -R 755 /var/www/testblazor && \
+                                                   sudo systemctl start blazorapp && \
                                                    sudo systemctl status blazorapp --no-pager"
-                                        """
-                                    
+                                          """
                              }
                          }
                   }
