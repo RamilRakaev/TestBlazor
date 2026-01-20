@@ -35,7 +35,6 @@ pipeline {
                   timeout(time: 5, unit: 'MINUTES') {
                              withCredentials([sshUserPrivateKey(credentialsId: 'c388a29f-ab16-44a6-ae08-fc2e14ed1f50',
                                                                 keyFileVariable: 'SSH_KEY',
-                                                                passphraseVariable: 'dog',
                                                                 usernameVariable: 'root')]) {
                                  
                                     bat """
