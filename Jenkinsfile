@@ -39,6 +39,8 @@ pipeline {
                                  
                                     bat """
                                             echo SSH_KEY path: %SSH_KEY%
+                                            echo $USER
+                                            echo $USERNAME
                                             whoami
                                             icacls "%SSH_KEY%"
                                             icacls "%SSH_KEY%" /inheritance:r /grant:r "SYSTEM:F"
